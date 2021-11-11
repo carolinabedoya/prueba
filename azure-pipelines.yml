@@ -18,4 +18,12 @@ steps:
 - script: |
     npm install
     npm run build
+    sls offline
+    sls dynamodb install
+    sls dynamodb start --migrate
+    npm test
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: '**/TEST-*.xml'
   displayName: 'npm install and build'
