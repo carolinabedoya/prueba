@@ -15,8 +15,8 @@ steps:
     versionSpec: '12.x'
   displayName: 'Install Node.js'
 - script: 
-    npm installs
-    npm lint
+    npm install
+    npm run lint
     npm test
   displayName: "NPM install, lint, and test"
 
