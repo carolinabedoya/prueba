@@ -14,14 +14,16 @@ steps:
   inputs:
     versionSpec: '12.x'
   displayName: 'Install Node.js'
-- script: 
+- script: |
     npm install
-    npm run lint
-    npm test
-  displayName: "NPM install, lint, and test"
-
+    npm install node-lambda -g
+  displayName: 'npm install'
+- script: |
+    node-lambda deploy -a $(AWS_ACCESS_KEY) -s $(AWS_SECRET_KEY) -o $(AWS_ROLE) -r $(AWS_REGION) -n $(AWS_LAMBDA_FUNCTION_NAME) --excludeGlobs "azure-pipelines.yml"
+  displayName: 'Deploy to AWS'
 - task: PublishTestResults@2
   inputs:
     testResultsFormat: 'JUnit'
     testResultsFiles: '**/TEST-*.xml'
   displayName: 'publish results'
+
